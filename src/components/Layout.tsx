@@ -43,7 +43,6 @@ const styles: Record<string, CSSProperties> = {
     fontFamily:
       '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     color: palette.textPrimary,
-    overflowX: 'hidden',
   },
   main: {
     flex: 1,
