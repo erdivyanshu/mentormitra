@@ -37,31 +37,31 @@ export const HOME = {
 
 export const ABOUT = {
   heroBadge: "Our story",
-  title: "Mentorship that actually moves your career forward",
+  title: "Built by aspirants, for aspirants",
   subtitle:
-    "Mentor Mitra was built because career advice in India is either too generic or too expensive. We wanted a place where you could talk to someone who has done the work - a PM at a product company, an engineer who cleared system design rounds, a founder who raised their first round.",
+    "We know what JEE and NEET prep feels like - the long syllabus, the mock-test anxiety, the nights when one concept refuses to click. Mentor Mitra exists so no student has to face that alone. Talk to someone who has walked the same path and come out the other side.",
   storyTitle: "Why we built this",
   storyParagraphs: [
-    "Most students and early professionals don't lack ambition - they lack access. You can watch a hundred YouTube videos on portfolios or system design, but nothing replaces a 45-minute conversation with someone who has hired designers, shipped products, or led teams.",
-    "Mentor Mitra brings that access to your phone. Browse mentors by skill, see real ratings from past sessions, book a slot that fits your schedule, and show up prepared with a clear goal. No cold LinkedIn DMs. No guessing if someone is worth your time.",
-    "We verify every mentor on the platform - checking their work history, session quality, and responsiveness - so you spend less time searching and more time learning.",
+    "We were once in the same phase you are in now. Endless chapters, coaching notes, and YouTube playlists - but what we needed most was a person who had already cleared the exam and could say, \"Here's how I approached this,\" not another generic tip.",
+    "That access is hard to find. Not every student has a senior in IIT or AIIMS to call. Coaching batches are large. Doubts pile up. Motivation dips. We built Mentor Mitra so 1:1 guidance from real JEE and NEET mentors is a tap away - for strategy, weak chapters, mock analysis, or simply clarity when prep feels overwhelming.",
+    "Every mentor on the platform is verified for exam background and session quality. You browse by subject or exam, see ratings from other aspirants, book a slot that fits your study schedule, and show up with a clear goal. We went through that journey. Now we help you through yours.",
   ],
   beliefTitle: "What we believe",
   beliefs: [
     {
-      title: "Advice should be specific",
+      title: "Guidance should be personal",
       description:
-        "Generic motivation doesn't help you crack an interview or fix a portfolio. Good mentorship answers your exact question with context from real experience.",
+        "A one-size-fits-all timetable does not fix your Physics weak spots. Good mentorship answers your exact doubt with the context of someone who cracked the same exam.",
     },
     {
-      title: "Access shouldn't depend on your network",
+      title: "Every aspirant deserves access",
       description:
-        "Not everyone has a senior cousin in tech or a college alumni group. A great mentor should be one tap away, regardless of where you studied or who you know.",
+        "You should not need the right coaching centre or family network to talk to someone who cleared JEE or NEET. That help should be available to any serious student.",
     },
     {
-      title: "Mentors deserve to be paid fairly",
+      title: "Mentors who lived it, teach it best",
       description:
-        "Experts give up their time to help others grow. We built wallet, payouts, and scheduling tools so mentors can focus on sessions - not chasing payments.",
+        "Rankers, droppers who finally made it, and subject experts who remember the grind make the best guides - because they have sat where you are sitting.",
     },
   ],
   differenceTitle: "What makes Mentor Mitra different",
@@ -91,28 +91,29 @@ export const ABOUT = {
         "From JEE & NEET to Physics, Chemistry, Maths, and Biology - find the right mentor fast.",
     },
   ],
-  audienceTitle: "Built for people like you",
+  audienceTitle: "Who we help",
   audienceSubtitle:
-    "Our main focus is students preparing for JEE and NEET - and Mentor Mitra is also here for school and college students.",
+    "Mentor Mitra is for students preparing for competitive exams - and for mentors who want to give back the guidance they once needed.",
   audiences: [
     {
       title: "JEE & NEET aspirants",
       description:
-        "This is who we built Mentor Mitra for first. Get 1:1 guidance on syllabus planning, problem-solving approach, mock-test analysis, and staying consistent through the long prep cycle - from mentors who cracked JEE or NEET themselves.",
+        "Get 1:1 help on concepts, syllabus planning, problem-solving, mock-test analysis, and staying consistent through the long prep cycle - from mentors who cracked JEE or NEET themselves.",
     },
     {
-      title: "School students",
+      title: "School students (Class 9–12)",
       description:
-        "In Class 9–12 and building toward competitive exams or boards? Talk to someone who started where you are - for subject clarity, coaching choices, time management, and building habits before the pressure peaks.",
+        "Building toward boards or entrance exams? Talk to someone who started where you are - for subject clarity, study habits, coaching choices, and early strategy before the pressure peaks.",
     },
     {
-      title: "College students",
+      title: "Mentors & seniors",
       description:
-        "Already in IIT, NIT, AIIMS, or medical college and want to mentor juniors - or still refining your own exam strategy with seniors who have been through it.",
+        "Already in IIT, NIT, AIIMS, or medical college? Share what you learned with juniors preparing for the same exams - on your schedule, at your rate.",
     },
   ],
   ctaTitle: "Ready to find your mentor?",
-  ctaSubtitle: "Download the app, browse experts, and book your first session.",
+  ctaSubtitle:
+    "Download the app, browse JEE & NEET mentors, and book your first session.",
 } as const;
 
 export const BECOME_MENTOR = {
