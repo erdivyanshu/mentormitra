@@ -2,13 +2,11 @@ import { CSSProperties, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { APP, NAV_LINKS } from '../constants/content';
-import { palette, navMaxWidth, pagePaddingX, spacing } from '../constants/theme';
+import { LOGO_SRC, palette, navMaxWidth, pagePaddingX, spacing } from '../constants/theme';
 import { NavScrollLink } from './NavScrollLink';
 import { PlayStoreButton } from './PlayStoreButton';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { useNavbarAnimation } from '../hooks/useNavbarAnimation';
-
-const LOGO_SRC = '/logo-zoomed.png';
 
 interface NavbarProps {
   onHomeClick?: () => void;

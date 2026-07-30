@@ -52,3 +52,7 @@ export const pagePaddingX = 40;
 
 export const PLAY_STORE_URL =
   'https://play.google.com/store/apps/details?id=com.mentormitra';
+
+/** Bump `v` whenever logo image files change (forces CDN/browser cache refresh). */
+export const LOGO_SRC = '/logo-zoomed.png?v=2';
+export const FAVICON_SRC = '/logo.png?v=2';

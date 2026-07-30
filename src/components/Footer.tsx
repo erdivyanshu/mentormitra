@@ -2,11 +2,9 @@ import { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
 import { Mail } from 'lucide-react';
 import { APP, FOOTER_LEGAL_LINKS, NAV_LINKS } from '../constants/content';
-import { maxWidth, pagePaddingX, palette, spacing } from '../constants/theme';
+import { LOGO_SRC, maxWidth, pagePaddingX, palette, spacing } from '../constants/theme';
 import { NavScrollLink } from './NavScrollLink';
 import { useRevealAnimation } from '../hooks/useRevealAnimation';
-
-const LOGO_SRC = '/logo-zoomed.png';
 
 export const Footer: React.FC = () => {
   const year = new Date().getFullYear();
