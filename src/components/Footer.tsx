@@ -1,18 +1,26 @@
 import { CSSProperties } from 'react';
 import { Link } from 'react-router-dom';
+import { Mail } from 'lucide-react';
 import { APP, FOOTER_LEGAL_LINKS, NAV_LINKS } from '../constants/content';
 import { maxWidth, pagePaddingX, palette, spacing } from '../constants/theme';
 import { NavScrollLink } from './NavScrollLink';
+import { useRevealAnimation } from '../hooks/useRevealAnimation';
 
 const LOGO_SRC = '/logo-zoomed.png';
 
 export const Footer: React.FC = () => {
   const year = new Date().getFullYear();
+  const ref = useRevealAnimation<HTMLElement>({
+    y: 32,
+    stagger: 0.08,
+    duration: 0.85,
+    start: 'top 92%',
+  });
 
   return (
-    <footer style={styles.footer}>
+    <footer ref={ref} style={styles.footer}>
       <div style={styles.inner}>
-        <div style={styles.brand}>
+        <div style={styles.brand} data-reveal>
           <img src={LOGO_SRC} alt={APP.name} style={styles.logo} />
           <div>
             <p style={styles.brandName}>{APP.name}</p>
@@ -20,37 +28,42 @@ export const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div style={styles.column}>
+        <div style={styles.column} data-reveal>
           <p style={styles.columnTitle}>Explore</p>
           {NAV_LINKS.map((link) => (
-            <NavScrollLink key={link.label} item={link} style={styles.link} />
+            <NavScrollLink key={link.label} item={link} style={styles.link} className="mm-link" />
           ))}
         </div>
 
-        <div style={styles.column}>
+        <div style={styles.column} data-reveal>
           <p style={styles.columnTitle}>Legal</p>
           {FOOTER_LEGAL_LINKS.map((link) => (
-            <Link key={link.to} to={link.to} style={styles.link}>
+            <Link key={link.to} to={link.to} style={styles.link} className="mm-link">
               {link.label}
             </Link>
           ))}
         </div>
 
-        <div style={styles.column}>
+        <div style={styles.column} data-reveal>
           <p style={styles.columnTitle}>Contact</p>
-          <a href={`mailto:${APP.supportEmail}`} style={styles.email}>
+          <a
+            href={`mailto:${APP.supportEmail}`}
+            style={styles.email}
+            className="mm-social"
+          >
+            <Mail size={16} style={{ marginRight: 6, verticalAlign: 'middle' }} />
             {APP.supportEmail}
           </a>
         </div>
       </div>
 
-      <div style={styles.bottom}>
+      <div style={styles.bottom} data-reveal>
         <p style={styles.copy}>
           © {year} {APP.name}. All rights reserved.
         </p>
         <div style={styles.bottomLinks}>
           {FOOTER_LEGAL_LINKS.map((link) => (
-            <Link key={link.to} to={link.to} style={styles.bottomLink}>
+            <Link key={link.to} to={link.to} style={styles.bottomLink} className="mm-link">
               {link.label}
             </Link>
           ))}
@@ -65,6 +78,8 @@ const styles: Record<string, CSSProperties> = {
     backgroundColor: palette.surface,
     borderTop: `1px solid ${palette.border}`,
     marginTop: 'auto',
+    position: 'relative',
+    zIndex: 1,
   },
   inner: {
     maxWidth: maxWidth,
@@ -88,12 +103,12 @@ const styles: Record<string, CSSProperties> = {
   brandName: {
     margin: 0,
     fontWeight: 700,
-    fontSize: 16,
+    fontSize: 19,
     color: palette.textPrimary,
   },
   tagline: {
     margin: `${spacing.xs}px 0 0`,
-    fontSize: 13,
+    fontSize: 15,
     color: palette.textSecondary,
     maxWidth: 200,
     lineHeight: 1.4,
@@ -105,7 +120,7 @@ const styles: Record<string, CSSProperties> = {
   },
   columnTitle: {
     margin: `0 0 ${spacing.sm}px`,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 700,
     color: palette.textPrimary,
     textTransform: 'uppercase',
@@ -114,16 +129,20 @@ const styles: Record<string, CSSProperties> = {
   link: {
     textDecoration: 'none',
     color: palette.textSecondary,
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 1.6,
     cursor: 'pointer',
+    width: 'fit-content',
   },
   email: {
     color: palette.primary,
     textDecoration: 'none',
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 500,
     lineHeight: 1.6,
+    display: 'inline-flex',
+    alignItems: 'center',
+    width: 'fit-content',
   },
   bottom: {
     borderTop: `1px solid ${palette.border}`,
@@ -138,7 +157,7 @@ const styles: Record<string, CSSProperties> = {
   },
   copy: {
     margin: 0,
-    fontSize: 13,
+    fontSize: 15,
     color: palette.textSecondary,
   },
   bottomLinks: {
@@ -149,6 +168,6 @@ const styles: Record<string, CSSProperties> = {
   bottomLink: {
     textDecoration: 'none',
     color: palette.textSecondary,
-    fontSize: 13,
+    fontSize: 15,
   },
 };

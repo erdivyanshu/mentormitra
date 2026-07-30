@@ -14,13 +14,16 @@ export const ExploreAllMentorsTile: React.FC<ExploreAllMentorsTileProps> = ({
     href={PLAY_STORE_URL}
     target="_blank"
     rel="noopener noreferrer"
+    className="mm-card-soft mm-icon-lift"
     style={{
       ...styles.tile,
       ...(spanColumns > 1 ? { gridColumn: `span ${spanColumns}` } : {}),
     }}
   >
     <span style={styles.label}>{HOME.exploreAllMentors}</span>
-    <ArrowRight size={20} />
+    <span className="mm-icon" style={{ display: 'inline-flex' }}>
+      <ArrowRight size={20} />
+    </span>
   </a>
 );
 
@@ -34,8 +37,9 @@ const styles: Record<string, CSSProperties> = {
     padding: spacing.xxl,
     textDecoration: 'none',
     color: palette.primary,
-    fontSize: 16,
+    fontSize: 19,
     fontWeight: 600,
+    height: '100%',
   },
   label: {
     lineHeight: 1.3,

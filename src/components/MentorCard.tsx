@@ -8,8 +8,13 @@ interface MentorCardProps {
 }
 
 export const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => (
-  <div style={styles.card}>
-    <img src={mentor.avatar} alt={mentor.name} style={styles.avatar} />
+  <div style={styles.card} className="mm-card">
+    <img
+      src={mentor.avatar}
+      alt={mentor.name}
+      style={styles.avatar}
+      className="mm-img mm-img-zoom"
+    />
     <div style={styles.body}>
       <div style={styles.nameRow}>
         <h3 style={styles.name}>{mentor.name}</h3>
@@ -30,6 +35,7 @@ export const MentorCard: React.FC<MentorCardProps> = ({ mentor }) => (
           target="_blank"
           rel="noopener noreferrer"
           style={styles.joinBtn}
+          className="mm-btn"
         >
           <Video size={16} />
           Join session
@@ -49,6 +55,7 @@ const styles: Record<string, CSSProperties> = {
     padding: spacing.xl,
     textAlign: 'left',
     width: '100%',
+    height: '100%',
   },
   avatar: {
     width: 64,
@@ -69,13 +76,13 @@ const styles: Record<string, CSSProperties> = {
   },
   name: {
     margin: 0,
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: 600,
     color: palette.textPrimary,
   },
   headline: {
     margin: `${spacing.xs}px 0`,
-    fontSize: 13,
+    fontSize: 15,
     color: palette.textSecondary,
     lineHeight: 1.4,
   },
@@ -86,7 +93,7 @@ const styles: Record<string, CSSProperties> = {
     marginTop: spacing.sm,
   },
   category: {
-    fontSize: 12,
+    fontSize: 14,
     fontWeight: 500,
     color: palette.primary,
     backgroundColor: palette.surface,
@@ -97,7 +104,7 @@ const styles: Record<string, CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     gap: 4,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 600,
     color: palette.textPrimary,
   },
@@ -110,7 +117,7 @@ const styles: Record<string, CSSProperties> = {
   },
   rate: {
     margin: 0,
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 600,
     color: palette.textPrimary,
     whiteSpace: 'nowrap',
@@ -126,7 +133,7 @@ const styles: Record<string, CSSProperties> = {
     color: palette.white,
     borderRadius: radius.pill,
     textDecoration: 'none',
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 600,
     whiteSpace: 'nowrap',
     flexShrink: 0,

@@ -32,13 +32,13 @@ const styles: Record<string, CSSProperties> = {
   },
   title: {
     margin: 0,
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 700,
     color: '#111827',
   },
   subtitle: {
     margin: '12px 0 0',
-    fontSize: 16,
+    fontSize: 19,
     color: '#6B7280',
     maxWidth: 560,
     marginLeft: 'auto',

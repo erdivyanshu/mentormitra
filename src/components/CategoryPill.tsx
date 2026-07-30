@@ -1,26 +1,26 @@
 import { CSSProperties } from 'react';
 import {
-  BarChart3,
-  Boxes,
-  Briefcase,
-  Code2,
-  Megaphone,
-  PenTool,
-  Rocket,
-  Wallet,
+  Atom,
+  Calculator,
+  Dna,
+  FlaskConical,
+  GraduationCap,
+  HeartPulse,
   LucideIcon,
+  School,
+  Trophy,
 } from 'lucide-react';
 import { palette, radius, spacing } from '../constants/theme';
 
 const iconMap: Record<string, LucideIcon> = {
-  PenTool,
-  Code2,
-  Boxes,
-  Megaphone,
-  BarChart3,
-  Wallet,
-  Briefcase,
-  Rocket,
+  GraduationCap,
+  Trophy,
+  HeartPulse,
+  School,
+  Atom,
+  FlaskConical,
+  Calculator,
+  Dna,
 };
 
 interface CategoryPillProps {
@@ -29,11 +29,13 @@ interface CategoryPillProps {
 }
 
 export const CategoryPill: React.FC<CategoryPillProps> = ({ name, iconName }) => {
-  const Icon = iconMap[iconName] ?? Briefcase;
+  const Icon = iconMap[iconName] ?? GraduationCap;
 
   return (
-    <div style={styles.pill}>
-      <Icon size={16} color={palette.primary} />
+    <div style={styles.pill} className="mm-pill mm-icon-lift">
+      <span className="mm-icon" style={{ display: 'inline-flex' }}>
+        <Icon size={16} color={palette.primary} />
+      </span>
       <span>{name}</span>
     </div>
   );
@@ -48,7 +50,7 @@ const styles: Record<string, CSSProperties> = {
     backgroundColor: palette.card,
     border: `1px solid ${palette.border}`,
     borderRadius: radius.pill,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 500,
     color: palette.textPrimary,
   },

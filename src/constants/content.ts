@@ -17,7 +17,7 @@ export const HOME = {
   heroHeadlineHighlight: "mentors",
   heroHeadlineAfter: "on call & chat",
   heroDescription:
-    "Get personalised career guidance from industry experts — book 1:1 video sessions, chat anytime, and grow faster.",
+    "Get personalised guidance for JEE Main, JEE Advanced, NEET & BITSAT - book 1:1 video sessions, clear doubts, and prep smarter.",
   heroFeatureTags: [
     { icon: "ShieldCheck", label: "Verified mentors" },
     { icon: "Clock", label: "24×7 booking" },
@@ -39,12 +39,12 @@ export const ABOUT = {
   heroBadge: "Our story",
   title: "Mentorship that actually moves your career forward",
   subtitle:
-    "Mentor Mitra was built because career advice in India is either too generic or too expensive. We wanted a place where you could talk to someone who has done the work — a PM at a product company, an engineer who cleared system design rounds, a founder who raised their first round.",
+    "Mentor Mitra was built because career advice in India is either too generic or too expensive. We wanted a place where you could talk to someone who has done the work - a PM at a product company, an engineer who cleared system design rounds, a founder who raised their first round.",
   storyTitle: "Why we built this",
   storyParagraphs: [
-    "Most students and early professionals don't lack ambition — they lack access. You can watch a hundred YouTube videos on portfolios or system design, but nothing replaces a 45-minute conversation with someone who has hired designers, shipped products, or led teams.",
+    "Most students and early professionals don't lack ambition - they lack access. You can watch a hundred YouTube videos on portfolios or system design, but nothing replaces a 45-minute conversation with someone who has hired designers, shipped products, or led teams.",
     "Mentor Mitra brings that access to your phone. Browse mentors by skill, see real ratings from past sessions, book a slot that fits your schedule, and show up prepared with a clear goal. No cold LinkedIn DMs. No guessing if someone is worth your time.",
-    "We verify every mentor on the platform — checking their work history, session quality, and responsiveness — so you spend less time searching and more time learning.",
+    "We verify every mentor on the platform - checking their work history, session quality, and responsiveness - so you spend less time searching and more time learning.",
   ],
   beliefTitle: "What we believe",
   beliefs: [
@@ -61,7 +61,7 @@ export const ABOUT = {
     {
       title: "Mentors deserve to be paid fairly",
       description:
-        "Experts give up their time to help others grow. We built wallet, payouts, and scheduling tools so mentors can focus on sessions — not chasing payments.",
+        "Experts give up their time to help others grow. We built wallet, payouts, and scheduling tools so mentors can focus on sessions - not chasing payments.",
     },
   ],
   differenceTitle: "What makes Mentor Mitra different",
@@ -70,60 +70,45 @@ export const ABOUT = {
       stat: "500+",
       label: "Verified mentors",
       detail:
-        "Across design, engineering, product, data, marketing, and startups.",
+        "Across JEE Main, JEE Advanced, NEET, BITSAT, and PCMB subjects.",
     },
     {
       stat: "4.8★",
       label: "Average session rating",
       detail:
-        "Students rate every session — low-rated mentors are reviewed and removed.",
+        "Students rate every session - low-rated mentors are reviewed and removed.",
     },
     {
-      stat: "₹800+",
+      stat: "₹100+",
       label: "Sessions from",
       detail:
         "Flexible pricing set by mentors. Pay only for the time you book.",
     },
     {
       stat: "8",
-      label: "Career categories",
+      label: "Exam categories",
       detail:
-        "From UX portfolios to fundraising prep — find the right expert fast.",
+        "From JEE & NEET to Physics, Chemistry, Maths, and Biology - find the right mentor fast.",
     },
   ],
   audienceTitle: "Built for people like you",
   audienceSubtitle:
-    "Our main focus is students preparing for JEE, NEET, and other competitive exams — but Mentor Mitra is also here for school and college students, working professionals, and career switchers.",
+    "Our main focus is students preparing for JEE and NEET - and Mentor Mitra is also here for school and college students.",
   audiences: [
     {
       title: "JEE & NEET aspirants",
       description:
-        "This is who we built Mentor Mitra for first. Get 1:1 guidance on syllabus planning, problem-solving approach, mock-test analysis, and staying consistent through the long prep cycle — from mentors who cracked JEE or NEET themselves.",
-    },
-    {
-      title: "Other competitive exams",
-      description:
-        "Preparing for UPSC, CAT, GATE, CLAT, banking, SSC, or state-level entrance tests? Connect with mentors who cleared the same exams and can help you with strategy, study plans, and interview or personality-test prep.",
+        "This is who we built Mentor Mitra for first. Get 1:1 guidance on syllabus planning, problem-solving approach, mock-test analysis, and staying consistent through the long prep cycle - from mentors who cracked JEE or NEET themselves.",
     },
     {
       title: "School students",
       description:
-        "In Class 9–12 and building toward competitive exams or boards? Talk to someone who started where you are — for subject clarity, coaching choices, time management, and building habits before the pressure peaks.",
+        "In Class 9–12 and building toward competitive exams or boards? Talk to someone who started where you are - for subject clarity, coaching choices, time management, and building habits before the pressure peaks.",
     },
     {
       title: "College students",
       description:
-        "Preparing for internships, building your first portfolio, or figuring out which role fits you — talk to someone who was in your shoes two years ago.",
-    },
-    {
-      title: "Working professionals",
-      description:
-        "Stuck on a promotion, switching teams, or preparing for senior interviews? Get targeted prep from people who have cleared those rounds.",
-    },
-    {
-      title: "Career switchers",
-      description:
-        "Moving from service to product, non-tech to tech, or employee to founder? Learn the unwritten rules from mentors who made the same jump.",
+        "Already in IIT, NIT, AIIMS, or medical college and want to mentor juniors - or still refining your own exam strategy with seniors who have been through it.",
     },
   ],
   ctaTitle: "Ready to find your mentor?",
@@ -131,12 +116,12 @@ export const ABOUT = {
 } as const;
 
 export const BECOME_MENTOR = {
-  heroBadge: "For industry experts",
-  title: "Turn your experience into income — on your terms.",
+  heroBadge: "For JEE & NEET mentors",
+  title: "Turn your experience into income - on your terms.",
   subtitle:
-    "Mentor Mitra connects you with motivated learners across India who need real guidance — not another generic course. Set your hourly rate, pick your availability, and mentor from anywhere.",
+    "Mentor Mitra connects you with motivated JEE, NEET, and BITSAT aspirants who need real guidance - not another generic course. Set your hourly rate, pick your availability, and mentor from anywhere.",
   heroHighlights: [
-    { value: "₹800–₹2,000", label: "Typical hourly rate" },
+    { value: "₹100–₹500", label: "Typical hourly rate" },
     { value: "Flexible", label: "You choose your hours" },
     { value: "Weekly", label: "Payouts to your bank" },
   ],
@@ -149,7 +134,7 @@ export const BECOME_MENTOR = {
   ],
   benefitsTitle: "Why mentors choose us",
   benefitsSubtitle:
-    "We handle discovery, booking, payments, and support — so you can focus on what you do best: mentoring.",
+    "We handle discovery, booking, payments, and support - so you can focus on what you do best: mentoring.",
   platformTitle: "Everything you need in one app",
   platformFeatures: [
     {
@@ -180,7 +165,7 @@ export const BECOME_MENTOR = {
       icon: "MessageSquare",
       title: "In-app chat",
       description:
-        "Message students before sessions, share prep materials, and follow up — all inside the app.",
+        "Message students before sessions, share prep materials, and follow up - all inside the app.",
     },
     {
       icon: "Video",
@@ -191,40 +176,64 @@ export const BECOME_MENTOR = {
   ],
   whoTitle: "Who makes a great mentor?",
   whoSubtitle:
-    "If you have 3+ years of real industry experience, students want to learn from you.",
+    "If you've cracked JEE Main, JEE Advanced, or NEET - or mentored aspirants through them - students want to learn from you.",
   whoProfiles: [
-    "Product designers & UX leads",
-    "Software engineers & architects",
-    "Product managers & founders",
-    "Data scientists & analysts",
-    "Growth & marketing specialists",
-    "Career coaches & interview prep experts",
+    "IIT / NIT / IIIT students & alumni (JEE Main & Advanced)",
+    "AIIMS / medical college students & doctors (NEET)",
+    "BITS Pilani students & alumni (BITSAT)",
+    "JEE Main & Advanced rankers and drop-year mentors",
+    "NEET UG rankers & repeaters who finally cracked it",
+    "Subject experts in Physics, Chemistry, Maths & Biology",
   ],
   stepsTitle: "Start mentoring in 3 steps",
   stepsSubtitle: "The entire onboarding takes less than 15 minutes.",
-  faqTitle: "Common questions",
+  faqTitle: "FAQ (Frequently Asked Questions)",
   faqs: [
     {
       q: "How much can I earn?",
-      a: "You set your own hourly rate. Most mentors charge between ₹800 and ₹2,000 per session. Top mentors on the platform earn ₹50,000–₹1,00,000+ per month depending on availability and demand.",
+      a: "You set your own hourly rate. Most mentors charge between ₹100 and ₹500 per session. Top mentors on the platform earn ₹50,000–₹1,00,000+ per month depending on availability and demand.",
     },
     {
       q: "Do I need to be available full-time?",
-      a: "Not at all. Many mentors take 2–5 sessions per week alongside their day job. You control your calendar completely.",
+      a: "Not at all. Many mentors take 2–5 sessions per week alongside college or a job. You control your calendar completely.",
+    },
+    {
+      q: "Who can become a mentor?",
+      a: "Anyone who has cracked JEE Main, JEE Advanced, or NEET - or has guided aspirants through them. IIT/NIT/IIIT and AIIMS/medical college students and alumni, rankers, droppers who succeeded, subject experts, and coaching faculty are all welcome.",
+    },
+    {
+      q: "Do I need a top rank to mentor?",
+      a: "No. Students value clarity, empathy, and a solid prep strategy as much as a rank. If you understand the exam deeply and can explain concepts or planning well, you can mentor.",
+    },
+    {
+      q: "Which subjects and exams can I mentor for?",
+      a: "You can mentor for JEE Main, JEE Advanced, and NEET across Physics, Chemistry, Maths, and Biology - plus strategy sessions like syllabus planning, mock analysis, time management, and drop-year guidance.",
     },
     {
       q: "How does verification work?",
-      a: "We review your LinkedIn profile, work history, and area of expertise. Most applications are reviewed within 48 hours.",
+      a: "We review your exam background, college or coaching credentials, and area of expertise. Most applications are reviewed within 48 hours.",
+    },
+    {
+      q: "What happens in a typical session?",
+      a: "Sessions are 1:1 video calls inside the app. Students usually come with doubts, mock-test reviews, or strategy questions. You can also chat and share prep notes before or after the call.",
     },
     {
       q: "When do I get paid?",
       a: "Session earnings are credited to your in-app wallet immediately after completion. Withdraw to your bank account anytime above the minimum threshold.",
     },
+    {
+      q: "Does Mentor Mitra take a commission?",
+      a: "Yes - a transparent platform fee is deducted from each session so we can handle discovery, booking, payments, and support. Your rate and fee breakdown are always visible in the app.",
+    },
+    {
+      q: "Can I cancel or reschedule a session?",
+      a: "Yes. You can reschedule or cancel from the app based on platform guidelines. We ask mentors to give reasonable notice so students can rebook without disruption.",
+    },
   ],
   quote: {
-    text: "I started with 3 sessions a week. Within two months I was mentoring regularly and earning more than I expected — all while helping students who remind me of my younger self.",
+    text: "I started with 3 sessions a week. Within two months I was mentoring regularly and earning more than I expected - all while helping aspirants who remind me of my younger self.",
     author: "Ananya Sharma",
-    role: "Senior Product Designer · Mentor since 2025",
+    role: "IIT Delhi · Physics mentor since 2025",
   },
   ctaTitle: "Your next student is waiting",
   ctaSubtitle:

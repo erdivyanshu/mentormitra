@@ -1,12 +1,12 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
-import { useState } from 'react';
 import { APP, NAV_LINKS } from '../constants/content';
 import { palette, navMaxWidth, pagePaddingX, spacing } from '../constants/theme';
 import { NavScrollLink } from './NavScrollLink';
 import { PlayStoreButton } from './PlayStoreButton';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { useNavbarAnimation } from '../hooks/useNavbarAnimation';
 
 const LOGO_SRC = '/logo-zoomed.png';
 
@@ -17,6 +17,7 @@ interface NavbarProps {
 export const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
   const [open, setOpen] = useState(false);
   const isMobile = useIsMobile();
+  const headerRef = useNavbarAnimation<HTMLElement>();
   const close = () => setOpen(false);
 
   const handleBrandClick = () => {
@@ -25,8 +26,9 @@ export const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
   };
 
   return (
-    <header style={styles.header}>
+    <header ref={headerRef} className="mm-nav" style={styles.header} data-scrolled="false">
       <div
+        className="mm-nav-inner"
         style={{
           ...styles.inner,
           ...(isMobile ? styles.innerMobile : {}),
@@ -41,7 +43,12 @@ export const Navbar: React.FC<NavbarProps> = ({ onHomeClick }) => {
           <>
             <nav style={styles.centerNav}>
               {NAV_LINKS.map((link) => (
-                <NavScrollLink key={link.label} item={link} style={styles.navLink} />
+                <NavScrollLink
+                  key={link.label}
+                  item={link}
+                  style={styles.navLink}
+                  className="mm-link"
+                />
               ))}
             </nav>
             <div style={styles.ctaWrap}>
@@ -116,7 +123,7 @@ const styles: Record<string, CSSProperties> = {
   },
   brandName: {
     fontWeight: 700,
-    fontSize: 16,
+    fontSize: 19,
   },
   centerNav: {
     display: 'flex',
@@ -127,7 +134,7 @@ const styles: Record<string, CSSProperties> = {
   navLink: {
     textDecoration: 'none',
     color: palette.textSecondary,
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 500,
     cursor: 'pointer',
   },
@@ -147,11 +154,12 @@ const styles: Record<string, CSSProperties> = {
     padding: `0 ${pagePaddingX}px ${spacing.xl}px`,
     gap: spacing.md,
     borderTop: `1px solid ${palette.border}`,
+    backgroundColor: 'rgba(246, 255, 246, 0.96)',
   },
   mobileLink: {
     textDecoration: 'none',
     color: palette.textPrimary,
-    fontSize: 16,
+    fontSize: 19,
     fontWeight: 500,
     padding: `${spacing.sm}px 0`,
     cursor: 'pointer',

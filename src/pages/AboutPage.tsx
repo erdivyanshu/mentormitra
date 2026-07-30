@@ -2,18 +2,24 @@ import { CSSProperties } from 'react';
 import { Sparkles } from 'lucide-react';
 import { ABOUT } from '../constants/content';
 import { fontSize, maxWidth, pagePaddingX, palette, radius, spacing } from '../constants/theme';
+import { AnimatedSection, FloatingReveal, RevealItem, splitWords } from '../components/AnimatedSection';
 import { PlayStoreButton } from '../components/PlayStoreButton';
+import { StatCounter } from '../components/StatCounter';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { usePageEnter } from '../hooks/usePageEnter';
+import { useParallax } from '../hooks/useParallax';
 
 const ABOUT_HERO_IMAGE = '/images/about-hero.png';
 const ABOUT_STORY_IMAGE = '/images/about-story.png';
 
 export const AboutPage: React.FC = () => {
   const isMobile = useIsMobile();
+  const pageRef = usePageEnter<HTMLDivElement>();
+  const heroVisualRef = useParallax<HTMLDivElement>({ strength: 7 });
 
   return (
-    <div>
-      <section style={styles.hero}>
+    <div ref={pageRef}>
+      <AnimatedSection style={styles.hero} stagger={0.1} y={28}>
         <div
           style={{
             ...styles.container,
@@ -22,26 +28,36 @@ export const AboutPage: React.FC = () => {
           }}
         >
           <div style={styles.heroText}>
-            <div style={styles.badge}>
-              <Sparkles size={14} color={palette.primary} />
-              <span>{ABOUT.heroBadge}</span>
+            <RevealItem>
+              <div style={styles.badge}>
+                <Sparkles size={14} color={palette.primary} />
+                <span>{ABOUT.heroBadge}</span>
+              </div>
+            </RevealItem>
+            <RevealItem>
+              <h1 style={{ ...styles.title, fontSize: isMobile ? 34 : fontSize.headingL }}>
+                {splitWords(ABOUT.title, 'about')}
+              </h1>
+            </RevealItem>
+            <RevealItem>
+              <p style={styles.subtitle}>{ABOUT.subtitle}</p>
+            </RevealItem>
+          </div>
+          <RevealItem style={styles.heroImageWrap}>
+            <div ref={heroVisualRef}>
+              <img
+                data-parallax="1"
+                src={ABOUT_HERO_IMAGE}
+                alt="Mentorship and career growth"
+                style={styles.heroImage}
+                className="mm-img mm-img-zoom"
+              />
             </div>
-            <h1 style={{ ...styles.title, fontSize: isMobile ? 30 : fontSize.headingL }}>
-              {ABOUT.title}
-            </h1>
-            <p style={styles.subtitle}>{ABOUT.subtitle}</p>
-          </div>
-          <div style={styles.heroImageWrap}>
-            <img
-              src={ABOUT_HERO_IMAGE}
-              alt="Mentorship and career growth"
-              style={styles.heroImage}
-            />
-          </div>
+          </RevealItem>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section style={styles.section}>
+      <AnimatedSection style={styles.section} stagger={0.1}>
         <div
           style={{
             ...styles.container,
@@ -50,26 +66,35 @@ export const AboutPage: React.FC = () => {
           }}
         >
           <div style={styles.storyContent}>
-            <h2 style={styles.sectionTitle}>{ABOUT.storyTitle}</h2>
+            <RevealItem>
+              <h2 style={styles.sectionTitle}>{ABOUT.storyTitle}</h2>
+            </RevealItem>
             {ABOUT.storyParagraphs.map((para, i) => (
-              <p key={i} style={styles.paragraph}>
-                {para}
-              </p>
+              <RevealItem key={i}>
+                <p style={styles.paragraph}>{para}</p>
+              </RevealItem>
             ))}
           </div>
-          <div style={styles.storyVisual}>
+          <RevealItem style={styles.storyVisual}>
             <img
               src={ABOUT_STORY_IMAGE}
               alt="Our mission to connect learners with guidance"
               style={styles.storyImage}
+              className="mm-img mm-img-zoom"
             />
-          </div>
+          </RevealItem>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section style={{ ...styles.section, backgroundColor: palette.surface }}>
+      <AnimatedSection
+        style={{ ...styles.section, backgroundColor: palette.surface }}
+        stagger={0.1}
+        scale={0.96}
+      >
         <div style={styles.container}>
-          <h2 style={styles.sectionTitle}>{ABOUT.beliefTitle}</h2>
+          <RevealItem>
+            <h2 style={styles.sectionTitle}>{ABOUT.beliefTitle}</h2>
+          </RevealItem>
           <div
             style={{
               ...styles.beliefGrid,
@@ -77,40 +102,55 @@ export const AboutPage: React.FC = () => {
             }}
           >
             {ABOUT.beliefs.map((belief, i) => (
-              <div key={belief.title} style={styles.beliefCard}>
-                <span style={styles.beliefNum}>0{i + 1}</span>
-                <h3 style={styles.beliefTitle}>{belief.title}</h3>
-                <p style={styles.beliefDesc}>{belief.description}</p>
-              </div>
+              <FloatingReveal key={belief.title} floatDelay={i * 0.4} enableFloat={!isMobile}>
+                <div style={styles.beliefCard} className="mm-card">
+                  <span style={styles.beliefNum}>0{i + 1}</span>
+                  <h3 style={styles.beliefTitle}>{belief.title}</h3>
+                  <p style={styles.beliefDesc}>{belief.description}</p>
+                </div>
+              </FloatingReveal>
             ))}
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section style={styles.section}>
+      <AnimatedSection style={styles.section} stagger={0.1} scale={0.96}>
         <div style={styles.container}>
-          <h2 style={styles.sectionTitle}>{ABOUT.differenceTitle}</h2>
+          <RevealItem>
+            <h2 style={styles.sectionTitle}>{ABOUT.differenceTitle}</h2>
+          </RevealItem>
           <div
             style={{
               ...styles.diffGrid,
               gridTemplateColumns: isMobile ? '1fr 1fr' : 'repeat(4, 1fr)',
             }}
           >
-            {ABOUT.differences.map((item) => (
-              <div key={item.label} style={styles.diffCard}>
-                <p style={styles.diffStat}>{item.stat}</p>
-                <p style={styles.diffLabel}>{item.label}</p>
-                <p style={styles.diffDetail}>{item.detail}</p>
-              </div>
+            {ABOUT.differences.map((item, i) => (
+              <FloatingReveal key={item.label} floatDelay={i * 0.3} enableFloat={!isMobile}>
+                <div style={styles.diffCard} className="mm-card-soft">
+                  <StatCounter value={item.stat} style={styles.diffStat} />
+                  <p style={styles.diffLabel}>{item.label}</p>
+                  <p style={styles.diffDetail}>{item.detail}</p>
+                </div>
+              </FloatingReveal>
             ))}
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section style={{ ...styles.section, backgroundColor: palette.surface }}>
+      <AnimatedSection
+        style={{ ...styles.section, backgroundColor: palette.surface }}
+        stagger={0.1}
+      >
         <div style={styles.container}>
-          <h2 style={{ ...styles.sectionTitle, marginBottom: spacing.md }}>{ABOUT.audienceTitle}</h2>
-          <p style={styles.audienceSubtitle}>{ABOUT.audienceSubtitle}</p>
+          <RevealItem>
+            <h2 style={{ ...styles.sectionTitle, marginBottom: spacing.md }}>
+              {ABOUT.audienceTitle}
+            </h2>
+          </RevealItem>
+          <RevealItem>
+            <p style={styles.audienceSubtitle}>{ABOUT.audienceSubtitle}</p>
+          </RevealItem>
           <div
             style={{
               ...styles.audienceGrid,
@@ -118,22 +158,30 @@ export const AboutPage: React.FC = () => {
             }}
           >
             {ABOUT.audiences.map((audience) => (
-              <div key={audience.title} style={styles.audienceCard}>
-                <h3 style={styles.audienceTitle}>{audience.title}</h3>
-                <p style={styles.audienceDesc}>{audience.description}</p>
-              </div>
+              <RevealItem key={audience.title}>
+                <div style={styles.audienceCard}>
+                  <h3 style={styles.audienceTitle}>{audience.title}</h3>
+                  <p style={styles.audienceDesc}>{audience.description}</p>
+                </div>
+              </RevealItem>
             ))}
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      <section style={styles.ctaSection}>
+      <AnimatedSection style={styles.ctaSection} stagger={0.1}>
         <div style={{ ...styles.container, textAlign: 'center' }}>
-          <h2 style={styles.ctaTitle}>{ABOUT.ctaTitle}</h2>
-          <p style={styles.ctaSubtitle}>{ABOUT.ctaSubtitle}</p>
-          <PlayStoreButton />
+          <RevealItem>
+            <h2 style={styles.ctaTitle}>{ABOUT.ctaTitle}</h2>
+          </RevealItem>
+          <RevealItem>
+            <p style={styles.ctaSubtitle}>{ABOUT.ctaSubtitle}</p>
+          </RevealItem>
+          <RevealItem>
+            <PlayStoreButton />
+          </RevealItem>
         </div>
-      </section>
+      </AnimatedSection>
     </div>
   );
 };
@@ -179,7 +227,7 @@ const styles: Record<string, CSSProperties> = {
     backgroundColor: 'rgba(46, 125, 50, 0.1)',
     border: `1px solid ${palette.border}`,
     borderRadius: radius.pill,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 500,
     color: palette.primaryDark,
     marginBottom: spacing.lg,
@@ -193,7 +241,7 @@ const styles: Record<string, CSSProperties> = {
   },
   subtitle: {
     margin: `${spacing.lg}px 0 0`,
-    fontSize: 18,
+    fontSize: 21,
     lineHeight: 1.7,
     color: palette.textSecondary,
     maxWidth: 640,
@@ -253,10 +301,11 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: radius.lg,
     padding: spacing.xxl,
     minHeight: 180,
+    height: '100%',
   },
   beliefNum: {
     display: 'block',
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 700,
     color: palette.primary,
     marginBottom: spacing.md,
@@ -264,12 +313,12 @@ const styles: Record<string, CSSProperties> = {
   },
   beliefTitle: {
     margin: `0 0 ${spacing.sm}px`,
-    fontSize: 18,
+    fontSize: 21,
     fontWeight: 600,
   },
   beliefDesc: {
     margin: 0,
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 1.65,
     color: palette.textSecondary,
   },
@@ -283,22 +332,23 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: radius.lg,
     padding: spacing.xl,
     textAlign: 'center',
+    height: '100%',
   },
   diffStat: {
     margin: 0,
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 800,
     color: palette.primary,
   },
   diffLabel: {
     margin: `${spacing.sm}px 0`,
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 600,
     color: palette.textPrimary,
   },
   diffDetail: {
     margin: 0,
-    fontSize: 13,
+    fontSize: 15,
     lineHeight: 1.5,
     color: palette.textSecondary,
   },
@@ -312,12 +362,12 @@ const styles: Record<string, CSSProperties> = {
   },
   audienceTitle: {
     margin: 0,
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: 600,
   },
   audienceDesc: {
     margin: `${spacing.sm}px 0 0`,
-    fontSize: 14,
+    fontSize: 16,
     lineHeight: 1.65,
     color: palette.textSecondary,
   },

@@ -11,12 +11,14 @@ export interface NavItem {
 interface NavScrollLinkProps {
   item: NavItem;
   style: CSSProperties;
+  className?: string;
   onNavigate?: () => void;
 }
 
 export const NavScrollLink: React.FC<NavScrollLinkProps> = ({
   item,
   style,
+  className,
   onNavigate,
 }) => {
   const location = useLocation();
@@ -37,7 +39,7 @@ export const NavScrollLink: React.FC<NavScrollLinkProps> = ({
     };
 
     return (
-      <a href={`/#${item.hash}`} onClick={handleClick} style={style}>
+      <a href={`/#${item.hash}`} onClick={handleClick} style={style} className={className}>
         {item.label}
       </a>
     );
@@ -51,7 +53,7 @@ export const NavScrollLink: React.FC<NavScrollLinkProps> = ({
   };
 
   return (
-    <Link to={item.to ?? '/'} style={style} onClick={handleClick}>
+    <Link to={item.to ?? '/'} style={style} className={className} onClick={handleClick}>
       {item.label}
     </Link>
   );

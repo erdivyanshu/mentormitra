@@ -139,7 +139,7 @@ const ContactFormInner: React.FC<{ onReset?: () => void }> = ({ onReset }) => {
         <ValidationError prefix="Message " field="message" errors={state.errors} style={styles.fieldError} />
       </FormField>
 
-      <button type="submit" style={styles.submit} disabled={state.submitting}>
+                      <button type="submit" style={styles.submit} className="mm-btn" disabled={state.submitting}>
         <Send size={18} />
         {state.submitting ? 'Sending...' : 'Submit'}
       </button>
@@ -163,7 +163,7 @@ const styles: Record<string, CSSProperties> = {
     color: palette.white,
     border: 'none',
     borderRadius: radius.pill,
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 600,
     cursor: 'pointer',
     width: '100%',
@@ -182,7 +182,7 @@ const styles: Record<string, CSSProperties> = {
   },
   successText: {
     margin: 0,
-    fontSize: 16,
+    fontSize: 19,
     color: palette.textPrimary,
     lineHeight: 1.5,
   },
@@ -190,7 +190,7 @@ const styles: Record<string, CSSProperties> = {
     background: 'none',
     border: 'none',
     color: palette.primary,
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 600,
     cursor: 'pointer',
     textDecoration: 'underline',
@@ -202,12 +202,12 @@ const styles: Record<string, CSSProperties> = {
     backgroundColor: 'rgba(220, 38, 38, 0.08)',
     borderRadius: radius.sm,
     color: palette.danger,
-    fontSize: 14,
+    fontSize: 16,
   },
   fieldError: {
     display: 'block',
     marginTop: spacing.xs,
-    fontSize: 12,
+    fontSize: 14,
     color: palette.danger,
   },
 };

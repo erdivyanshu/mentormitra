@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { useMagnetic } from '../hooks/useMagnetic';
 import { PLAY_STORE_URL, palette, radius, spacing } from '../constants/theme';
 
 const BADGE_SRC = '/images/google-play-badge.png';
@@ -21,12 +22,18 @@ export const PlayStoreButton: React.FC<PlayStoreButtonProps> = ({
   fullWidth = false,
   label = 'Get the App',
 }) => {
+  const magneticRef = useMagnetic<HTMLAnchorElement>({
+    strength: variant === 'badge' ? 10 : 8,
+  });
+
   if (variant === 'text') {
     return (
       <a
+        ref={magneticRef}
         href={PLAY_STORE_URL}
         target="_blank"
         rel="noopener noreferrer"
+        className="mm-btn"
         style={{
           ...styles.textBtn,
           ...(size === 'sm' ? styles.textBtnSm : {}),
@@ -40,9 +47,11 @@ export const PlayStoreButton: React.FC<PlayStoreButtonProps> = ({
 
   return (
     <a
+      ref={magneticRef}
       href={PLAY_STORE_URL}
       target="_blank"
       rel="noopener noreferrer"
+      className="mm-btn-badge"
       style={{
         ...styles.link,
         ...(fullWidth ? styles.fullWidth : {}),
@@ -78,7 +87,7 @@ const styles: Record<string, CSSProperties> = {
     color: palette.white,
     borderRadius: radius.pill,
     textDecoration: 'none',
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 600,
     whiteSpace: 'nowrap',
     border: 'none',
@@ -86,7 +95,7 @@ const styles: Record<string, CSSProperties> = {
   },
   textBtnSm: {
     padding: `${spacing.sm}px ${spacing.lg}px`,
-    fontSize: 14,
+    fontSize: 16,
   },
   fullWidth: {
     width: '100%',

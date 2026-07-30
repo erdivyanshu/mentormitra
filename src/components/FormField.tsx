@@ -18,7 +18,7 @@ export const FormField: React.FC<FormFieldProps> = ({ label, error, children }) 
 export const inputStyle: CSSProperties = {
   width: '100%',
   padding: `${spacing.md}px ${spacing.lg}px`,
-  fontSize: 15,
+  fontSize: 17,
   border: `1px solid ${palette.border}`,
   borderRadius: radius.md,
   backgroundColor: palette.card,
@@ -35,15 +35,17 @@ type InputProps = InputHTMLAttributes<HTMLInputElement> & { hasError?: boolean }
 type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & { hasError?: boolean };
 type TextareaProps = TextareaHTMLAttributes<HTMLTextAreaElement> & { hasError?: boolean };
 
-export const FormInput: React.FC<InputProps> = ({ hasError, style, ...props }) => (
+export const FormInput: React.FC<InputProps> = ({ hasError, style, className, ...props }) => (
   <input
+    className={`mm-input ${className ?? ''}`.trim()}
     style={{ ...inputStyle, ...(hasError ? inputErrorStyle : {}), ...style }}
     {...props}
   />
 );
 
-export const FormSelect: React.FC<SelectProps> = ({ hasError, style, children, ...props }) => (
+export const FormSelect: React.FC<SelectProps> = ({ hasError, style, className, children, ...props }) => (
   <select
+    className={`mm-input ${className ?? ''}`.trim()}
     style={{ ...inputStyle, ...(hasError ? inputErrorStyle : {}), ...style }}
     {...props}
   >
@@ -51,8 +53,9 @@ export const FormSelect: React.FC<SelectProps> = ({ hasError, style, children, .
   </select>
 );
 
-export const FormTextarea: React.FC<TextareaProps> = ({ hasError, style, ...props }) => (
+export const FormTextarea: React.FC<TextareaProps> = ({ hasError, style, className, ...props }) => (
   <textarea
+    className={`mm-input ${className ?? ''}`.trim()}
     style={{
       ...inputStyle,
       minHeight: 120,
@@ -72,12 +75,12 @@ const styles: Record<string, CSSProperties> = {
     marginBottom: spacing.lg,
   },
   label: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: 600,
     color: palette.textPrimary,
   },
   error: {
-    fontSize: 12,
+    fontSize: 14,
     color: palette.danger,
   },
 };

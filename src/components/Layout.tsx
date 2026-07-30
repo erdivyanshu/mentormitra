@@ -1,9 +1,10 @@
 import { CSSProperties } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import { Navbar } from './Navbar';
 import { Footer } from './Footer';
 import { ScrollToTop } from './ScrollToTop';
+import { ScrollProgress } from './ScrollProgress';
+import { AmbientBackground } from './AmbientBackground';
 import { palette } from '../constants/theme';
 import { scrollToTop } from '../utils/scroll';
 
@@ -20,7 +21,9 @@ export const Layout: React.FC = () => {
   };
 
   return (
-    <div style={styles.wrapper}>
+    <div style={styles.wrapper} className="mm-page-shell">
+      <AmbientBackground />
+      <ScrollProgress />
       <ScrollToTop />
       <Navbar onHomeClick={handleHomeClick} />
       <main style={styles.main}>
@@ -37,10 +40,14 @@ const styles: Record<string, CSSProperties> = {
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: palette.background,
-    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    fontFamily:
+      '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     color: palette.textPrimary,
+    overflowX: 'hidden',
   },
   main: {
     flex: 1,
+    position: 'relative',
+    zIndex: 1,
   },
 };

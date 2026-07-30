@@ -33,13 +33,13 @@ export const radius = {
 } as const;
 
 export const fontSize = {
-  headingXL: 42,
-  headingL: 32,
-  headingM: 24,
-  title: 20,
-  body: 16,
-  label: 14,
-  caption: 12,
+  headingXL: 46,
+  headingL: 36,
+  headingM: 28,
+  title: 23,
+  body: 19,
+  label: 16,
+  caption: 14,
 } as const;
 
 export const maxWidth = 1280;

@@ -1,7 +1,8 @@
-import { CSSProperties } from 'react';
+import { CSSProperties, useState } from 'react';
 import {
   BadgeCheck,
   Calendar,
+  ChevronDown,
   Clock,
   IndianRupee,
   LayoutDashboard,
@@ -16,9 +17,13 @@ import {
 import { BECOME_MENTOR } from '../constants/content';
 import { JOIN_STEPS, MENTOR_BENEFITS } from '../constants/mentors';
 import { fontSize, maxWidth, pagePaddingX, palette, radius, spacing } from '../constants/theme';
+import { AnimatedSection, FloatingReveal, RevealItem, splitWords } from '../components/AnimatedSection';
 import { HeroPhoneShowcase, PhoneImage } from '../components/HeroPhoneShowcase';
 import { PlayStoreButton } from '../components/PlayStoreButton';
+import { StatCounter } from '../components/StatCounter';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { usePageEnter } from '../hooks/usePageEnter';
+import { useParallax } from '../hooks/useParallax';
 
 const benefitIcons: Record<string, LucideIcon> = { Clock, IndianRupee, Users };
 const platformIcons: Record<string, LucideIcon> = {
@@ -32,11 +37,13 @@ const platformIcons: Record<string, LucideIcon> = {
 
 export const BecomeMentorPage: React.FC = () => {
   const isMobile = useIsMobile();
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const pageRef = usePageEnter<HTMLDivElement>();
+  const heroVisualRef = useParallax<HTMLDivElement>({ strength: 8 });
 
   return (
-    <div>
-      {/* Hero */}
-      <section style={styles.hero}>
+    <div ref={pageRef}>
+      <AnimatedSection style={styles.hero} stagger={0.1} y={28}>
         <div
           style={{
             ...styles.container,
@@ -51,14 +58,20 @@ export const BecomeMentorPage: React.FC = () => {
               textAlign: isMobile ? 'center' : 'left',
             }}
           >
-            <div style={styles.badge}>
-              <Sparkles size={14} color={palette.primary} />
-              <span>{BECOME_MENTOR.heroBadge}</span>
-            </div>
-            <h1 style={{ ...styles.heroTitle, fontSize: isMobile ? 32 : 40 }}>
-              {BECOME_MENTOR.title}
-            </h1>
-            <p style={styles.heroSubtitle}>{BECOME_MENTOR.subtitle}</p>
+            <RevealItem>
+              <div style={styles.badge}>
+                <Sparkles size={14} color={palette.primary} />
+                <span>{BECOME_MENTOR.heroBadge}</span>
+              </div>
+            </RevealItem>
+            <RevealItem>
+              <h1 style={{ ...styles.heroTitle, fontSize: isMobile ? 36 : 44 }}>
+                {splitWords(BECOME_MENTOR.title, 'bm')}
+              </h1>
+            </RevealItem>
+            <RevealItem>
+              <p style={styles.heroSubtitle}>{BECOME_MENTOR.subtitle}</p>
+            </RevealItem>
 
             <div
               style={{
@@ -67,26 +80,35 @@ export const BecomeMentorPage: React.FC = () => {
               }}
             >
               {BECOME_MENTOR.heroHighlights.map((h) => (
-                <div key={h.label} style={styles.highlightCard}>
-                  <span style={styles.highlightValue}>{h.value}</span>
-                  <span style={styles.highlightLabel}>{h.label}</span>
-                </div>
+                <RevealItem key={h.label}>
+                  <div style={styles.highlightCard} className="mm-card-soft">
+                    <span style={styles.highlightValue}>{h.value}</span>
+                    <span style={styles.highlightLabel}>{h.label}</span>
+                  </div>
+                </RevealItem>
               ))}
             </div>
 
-            <PlayStoreButton />
+            <RevealItem>
+              <PlayStoreButton />
+            </RevealItem>
           </div>
 
-          <div style={styles.heroVisual}>
-            <HeroPhoneShowcase centerSrc="/images/hero-phone-right.png" />
-          </div>
+          <RevealItem style={styles.heroVisual}>
+            <div ref={heroVisualRef}>
+              <div data-parallax="1">
+                <HeroPhoneShowcase centerSrc="/images/hero-phone-right.png" />
+              </div>
+            </div>
+          </RevealItem>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Stats */}
-      <section style={styles.statsSection}>
+      <AnimatedSection style={styles.statsSection} stagger={0.1}>
         <div style={styles.container}>
-          <p style={styles.statsLabel}>{BECOME_MENTOR.statsTitle}</p>
+          <RevealItem>
+            <p style={styles.statsLabel}>{BECOME_MENTOR.statsTitle}</p>
+          </RevealItem>
           <div
             style={{
               ...styles.statsGrid,
@@ -94,46 +116,55 @@ export const BecomeMentorPage: React.FC = () => {
             }}
           >
             {BECOME_MENTOR.stats.map((s) => (
-              <div key={s.label} style={styles.statItem}>
-                <p style={styles.statValue}>{s.value}</p>
+              <RevealItem key={s.label} style={styles.statItem}>
+                <StatCounter value={s.value} style={styles.statValue} />
                 <p style={styles.statDesc}>{s.label}</p>
-              </div>
+              </RevealItem>
             ))}
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Why mentor — top 3 benefits */}
-      <section style={styles.section}>
+      <AnimatedSection style={styles.section} stagger={0.1} scale={0.96}>
         <div style={styles.container}>
-          <h2 style={styles.sectionTitle}>{BECOME_MENTOR.benefitsTitle}</h2>
-          <p style={styles.sectionSubtitle}>{BECOME_MENTOR.benefitsSubtitle}</p>
+          <RevealItem>
+            <h2 style={styles.sectionTitle}>{BECOME_MENTOR.benefitsTitle}</h2>
+          </RevealItem>
+          <RevealItem>
+            <p style={styles.sectionSubtitle}>{BECOME_MENTOR.benefitsSubtitle}</p>
+          </RevealItem>
           <div
             style={{
               ...styles.grid3,
               gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
             }}
           >
-            {MENTOR_BENEFITS.map((item) => {
+            {MENTOR_BENEFITS.map((item, i) => {
               const Icon = benefitIcons[item.iconName];
               return (
-                <div key={item.title} style={styles.benefitCard}>
-                  <div style={styles.iconCircle}>
-                    <Icon size={26} color={palette.primary} />
+                <FloatingReveal key={item.title} floatDelay={i * 0.4} enableFloat={!isMobile}>
+                  <div style={styles.benefitCard} className="mm-card mm-icon-tilt">
+                    <div style={styles.iconCircle} className="mm-icon">
+                      <Icon size={26} color={palette.primary} />
+                    </div>
+                    <h3 style={styles.cardTitle}>{item.title}</h3>
+                    <p style={styles.cardDesc}>{item.description}</p>
                   </div>
-                  <h3 style={styles.cardTitle}>{item.title}</h3>
-                  <p style={styles.cardDesc}>{item.description}</p>
-                </div>
+                </FloatingReveal>
               );
             })}
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Platform features + image */}
-      <section style={{ ...styles.section, backgroundColor: palette.surface }}>
+      <AnimatedSection
+        style={{ ...styles.section, backgroundColor: palette.surface }}
+        stagger={0.08}
+      >
         <div style={styles.container}>
-          <h2 style={styles.sectionTitle}>{BECOME_MENTOR.platformTitle}</h2>
+          <RevealItem>
+            <h2 style={styles.sectionTitle}>{BECOME_MENTOR.platformTitle}</h2>
+          </RevealItem>
           <div
             style={{
               ...styles.platformLayout,
@@ -149,27 +180,32 @@ export const BecomeMentorPage: React.FC = () => {
               {BECOME_MENTOR.platformFeatures.map((f) => {
                 const Icon = platformIcons[f.icon] ?? LayoutDashboard;
                 return (
-                  <div key={f.title} style={styles.featureRow}>
-                    <div style={styles.featureIcon}>
-                      <Icon size={20} color={palette.primary} />
+                  <RevealItem key={f.title}>
+                    <div style={styles.featureRow} className="mm-icon-lift">
+                      <div style={styles.featureIcon} className="mm-icon">
+                        <Icon size={20} color={palette.primary} />
+                      </div>
+                      <div>
+                        <h3 style={styles.featureTitle}>{f.title}</h3>
+                        <p style={styles.featureDesc}>{f.description}</p>
+                      </div>
                     </div>
-                    <div>
-                      <h3 style={styles.featureTitle}>{f.title}</h3>
-                      <p style={styles.featureDesc}>{f.description}</p>
-                    </div>
-                  </div>
+                  </RevealItem>
                 );
               })}
             </div>
-            <div style={styles.platformImage}>
-              <PhoneImage src="/images/hero-phone-center.png" alt="Mentor dashboard" maxWidth={240} />
-            </div>
+            <RevealItem style={styles.platformImage}>
+              <PhoneImage
+                src="/images/hero-phone-center.png"
+                alt="Mentor dashboard"
+                maxWidth={240}
+              />
+            </RevealItem>
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Who should apply */}
-      <section style={styles.section}>
+      <AnimatedSection style={styles.section} stagger={0.1}>
         <div
           style={{
             ...styles.container,
@@ -178,76 +214,134 @@ export const BecomeMentorPage: React.FC = () => {
           }}
         >
           <div style={styles.whoText}>
-            <h2 style={styles.sectionTitle}>{BECOME_MENTOR.whoTitle}</h2>
-            <p style={styles.sectionSubtitle}>{BECOME_MENTOR.whoSubtitle}</p>
+            <RevealItem>
+              <h2 style={styles.sectionTitle}>{BECOME_MENTOR.whoTitle}</h2>
+            </RevealItem>
+            <RevealItem>
+              <p style={styles.sectionSubtitle}>{BECOME_MENTOR.whoSubtitle}</p>
+            </RevealItem>
             <ul style={styles.whoList}>
               {BECOME_MENTOR.whoProfiles.map((profile) => (
-                <li key={profile} style={styles.whoItem}>
-                  <span style={styles.whoDot} />
-                  {profile}
-                </li>
+                <RevealItem key={profile} style={{ listStyle: 'none' }}>
+                  <li style={styles.whoItem}>
+                    <span style={styles.whoDot} />
+                    {profile}
+                  </li>
+                </RevealItem>
               ))}
             </ul>
           </div>
-          <div style={styles.whoImage}>
-            <PhoneImage src="/images/hero-phone-left.png" alt="Mentor profiles" maxWidth={220} />
-          </div>
+          <RevealItem style={styles.whoImage}>
+            <PhoneImage
+              src="/images/hero-phone-left.png"
+              alt="Mentor profiles"
+              maxWidth={220}
+            />
+          </RevealItem>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Steps */}
-      <section style={{ ...styles.section, backgroundColor: palette.surface }}>
+      <AnimatedSection
+        style={{ ...styles.section, backgroundColor: palette.surface }}
+        stagger={0.1}
+        scale={0.96}
+      >
         <div style={styles.container}>
-          <h2 style={{ ...styles.sectionTitle, textAlign: 'center' }}>{BECOME_MENTOR.stepsTitle}</h2>
-          <p style={{ ...styles.sectionSubtitle, textAlign: 'center', marginBottom: spacing.xxxl }}>
-            {BECOME_MENTOR.stepsSubtitle}
-          </p>
+          <RevealItem>
+            <h2 style={{ ...styles.sectionTitle, textAlign: 'center' }}>
+              {BECOME_MENTOR.stepsTitle}
+            </h2>
+          </RevealItem>
+          <RevealItem>
+            <p
+              style={{
+                ...styles.sectionSubtitle,
+                textAlign: 'center',
+                marginBottom: spacing.xxxl,
+              }}
+            >
+              {BECOME_MENTOR.stepsSubtitle}
+            </p>
+          </RevealItem>
           <div
             style={{
               ...styles.stepsGrid,
               gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
             }}
           >
-            {JOIN_STEPS.map((step) => (
-              <div key={step.step} style={styles.stepCard}>
-                <div style={styles.stepNum}>{step.step}</div>
-                <h3 style={styles.stepTitle}>{step.title}</h3>
-                <p style={styles.stepDesc}>{step.description}</p>
-              </div>
+            {JOIN_STEPS.map((step, i) => (
+              <FloatingReveal key={step.step} floatDelay={i * 0.35} enableFloat={!isMobile}>
+                <div style={styles.stepCard} className="mm-card">
+                  <div style={styles.stepNum}>{step.step}</div>
+                  <h3 style={styles.stepTitle}>{step.title}</h3>
+                  <p style={styles.stepDesc}>{step.description}</p>
+                </div>
+              </FloatingReveal>
             ))}
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* Quote */}
-      <section style={styles.section}>
+      <AnimatedSection style={styles.section} stagger={0.1} scale={0.97}>
         <div style={styles.container}>
-          <div style={styles.quoteCard}>
-            <Quote size={32} color={palette.primary} style={{ opacity: 0.4 }} />
-            <p style={styles.quoteText}>"{BECOME_MENTOR.quote.text}"</p>
-            <p style={styles.quoteAuthor}>{BECOME_MENTOR.quote.author}</p>
-            <p style={styles.quoteRole}>{BECOME_MENTOR.quote.role}</p>
-          </div>
+          <RevealItem>
+            <div style={styles.quoteCard} className="mm-card-soft">
+              <Quote size={32} color={palette.primary} style={{ opacity: 0.4 }} />
+              <p style={styles.quoteText}>"{BECOME_MENTOR.quote.text}"</p>
+              <p style={styles.quoteAuthor}>{BECOME_MENTOR.quote.author}</p>
+              <p style={styles.quoteRole}>{BECOME_MENTOR.quote.role}</p>
+            </div>
+          </RevealItem>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* FAQ */}
-      <section style={{ ...styles.section, backgroundColor: palette.surface }}>
+      <AnimatedSection
+        style={{ ...styles.section, backgroundColor: palette.surface }}
+        stagger={0.06}
+      >
         <div style={{ ...styles.container, maxWidth: 720 }}>
-          <h2 style={styles.sectionTitle}>{BECOME_MENTOR.faqTitle}</h2>
+          <RevealItem>
+            <h2 style={styles.sectionTitle}>{BECOME_MENTOR.faqTitle}</h2>
+          </RevealItem>
           <div style={styles.faqList}>
-            {BECOME_MENTOR.faqs.map((faq) => (
-              <div key={faq.q} style={styles.faqItem}>
-                <h3 style={styles.faqQ}>{faq.q}</h3>
-                <p style={styles.faqA}>{faq.a}</p>
-              </div>
-            ))}
+            {BECOME_MENTOR.faqs.map((faq, index) => {
+              const isOpen = openFaq === index;
+              return (
+                <RevealItem key={faq.q}>
+                  <div style={styles.faqItem} className="mm-card-soft">
+                    <button
+                      type="button"
+                      style={styles.faqButton}
+                      aria-expanded={isOpen}
+                      onClick={() => setOpenFaq(isOpen ? null : index)}
+                    >
+                      <h3 style={styles.faqQ}>{faq.q}</h3>
+                      <ChevronDown
+                        size={20}
+                        color={palette.primary}
+                        className="mm-faq-chevron"
+                        data-open={isOpen ? 'true' : 'false'}
+                      />
+                    </button>
+                    <div
+                      className="mm-faq-panel"
+                      data-open={isOpen ? 'true' : 'false'}
+                    >
+                      <div className="mm-faq-panel-inner">
+                        <p style={styles.faqA} className="mm-faq-answer">
+                          {faq.a}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </RevealItem>
+              );
+            })}
           </div>
         </div>
-      </section>
+      </AnimatedSection>
 
-      {/* CTA */}
-      <section style={styles.ctaSection}>
+      <AnimatedSection style={styles.ctaSection} stagger={0.1}>
         <div
           style={{
             ...styles.container,
@@ -256,15 +350,21 @@ export const BecomeMentorPage: React.FC = () => {
           }}
         >
           <div style={styles.ctaText}>
-            <h2 style={styles.ctaTitle}>{BECOME_MENTOR.ctaTitle}</h2>
-            <p style={styles.ctaSubtitle}>{BECOME_MENTOR.ctaSubtitle}</p>
-            <PlayStoreButton />
+            <RevealItem>
+              <h2 style={styles.ctaTitle}>{BECOME_MENTOR.ctaTitle}</h2>
+            </RevealItem>
+            <RevealItem>
+              <p style={styles.ctaSubtitle}>{BECOME_MENTOR.ctaSubtitle}</p>
+            </RevealItem>
+            <RevealItem>
+              <PlayStoreButton />
+            </RevealItem>
           </div>
-          <div style={styles.ctaImage}>
+          <RevealItem style={styles.ctaImage}>
             <HeroPhoneShowcase compact />
-          </div>
+          </RevealItem>
         </div>
-      </section>
+      </AnimatedSection>
     </div>
   );
 };
@@ -301,7 +401,7 @@ const styles: Record<string, CSSProperties> = {
     backgroundColor: 'rgba(46, 125, 50, 0.1)',
     border: `1px solid ${palette.border}`,
     borderRadius: radius.pill,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 500,
     color: palette.primaryDark,
     marginBottom: spacing.lg,
@@ -315,7 +415,7 @@ const styles: Record<string, CSSProperties> = {
   },
   heroSubtitle: {
     margin: `${spacing.lg}px 0 ${spacing.xxl}px`,
-    fontSize: 17,
+    fontSize: 20,
     lineHeight: 1.7,
     color: palette.textSecondary,
     maxWidth: 500,
@@ -336,12 +436,12 @@ const styles: Record<string, CSSProperties> = {
     minWidth: 110,
   },
   highlightValue: {
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 700,
     color: palette.primary,
   },
   highlightLabel: {
-    fontSize: 11,
+    fontSize: 13,
     color: palette.textSecondary,
     marginTop: 2,
   },
@@ -351,7 +451,7 @@ const styles: Record<string, CSSProperties> = {
   },
   statsLabel: {
     margin: `0 0 ${spacing.lg}px`,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 600,
     color: 'rgba(255,255,255,0.8)',
     textAlign: 'center',
@@ -367,13 +467,13 @@ const styles: Record<string, CSSProperties> = {
   },
   statValue: {
     margin: 0,
-    fontSize: 28,
+    fontSize: 32,
     fontWeight: 800,
     color: palette.white,
   },
   statDesc: {
     margin: `${spacing.xs}px 0 0`,
-    fontSize: 13,
+    fontSize: 15,
     color: 'rgba(255,255,255,0.85)',
   },
   section: {
@@ -401,6 +501,7 @@ const styles: Record<string, CSSProperties> = {
     border: `1px solid ${palette.border}`,
     borderRadius: radius.lg,
     padding: spacing.xxl,
+    height: '100%',
   },
   iconCircle: {
     width: 52,
@@ -414,12 +515,12 @@ const styles: Record<string, CSSProperties> = {
   },
   cardTitle: {
     margin: `0 0 ${spacing.sm}px`,
-    fontSize: 18,
+    fontSize: 21,
     fontWeight: 600,
   },
   cardDesc: {
     margin: 0,
-    fontSize: 14,
+    fontSize: 16,
     color: palette.textSecondary,
     lineHeight: 1.65,
   },
@@ -452,12 +553,12 @@ const styles: Record<string, CSSProperties> = {
   },
   featureTitle: {
     margin: 0,
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 600,
   },
   featureDesc: {
     margin: `${spacing.xs}px 0 0`,
-    fontSize: 13,
+    fontSize: 15,
     color: palette.textSecondary,
     lineHeight: 1.55,
   },
@@ -486,7 +587,7 @@ const styles: Record<string, CSSProperties> = {
     display: 'flex',
     alignItems: 'center',
     gap: spacing.md,
-    fontSize: 15,
+    fontSize: 17,
     color: palette.textPrimary,
     fontWeight: 500,
   },
@@ -512,6 +613,7 @@ const styles: Record<string, CSSProperties> = {
     borderRadius: radius.lg,
     padding: spacing.xxl,
     textAlign: 'center',
+    height: '100%',
   },
   stepNum: {
     width: 44,
@@ -523,17 +625,17 @@ const styles: Record<string, CSSProperties> = {
     alignItems: 'center',
     justifyContent: 'center',
     fontWeight: 800,
-    fontSize: 18,
+    fontSize: 21,
     margin: `0 auto ${spacing.lg}px`,
   },
   stepTitle: {
     margin: 0,
-    fontSize: 17,
+    fontSize: 20,
     fontWeight: 600,
   },
   stepDesc: {
     margin: `${spacing.sm}px 0 0`,
-    fontSize: 14,
+    fontSize: 16,
     color: palette.textSecondary,
     lineHeight: 1.6,
   },
@@ -548,20 +650,20 @@ const styles: Record<string, CSSProperties> = {
   },
   quoteText: {
     margin: `${spacing.lg}px 0`,
-    fontSize: 18,
+    fontSize: 21,
     lineHeight: 1.7,
     color: palette.textPrimary,
     fontStyle: 'italic',
   },
   quoteAuthor: {
     margin: 0,
-    fontSize: 15,
+    fontSize: 17,
     fontWeight: 700,
     color: palette.textPrimary,
   },
   quoteRole: {
     margin: `${spacing.xs}px 0 0`,
-    fontSize: 13,
+    fontSize: 15,
     color: palette.textSecondary,
   },
   faqList: {
@@ -573,17 +675,29 @@ const styles: Record<string, CSSProperties> = {
     backgroundColor: palette.card,
     border: `1px solid ${palette.border}`,
     borderRadius: radius.lg,
-    padding: spacing.xl,
+    padding: `${spacing.lg}px ${spacing.xl}px`,
+  },
+  faqButton: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    gap: spacing.md,
+    width: '100%',
+    padding: 0,
+    border: 'none',
+    background: 'transparent',
+    cursor: 'pointer',
+    textAlign: 'left',
   },
   faqQ: {
-    margin: `0 0 ${spacing.sm}px`,
-    fontSize: 16,
+    margin: 0,
+    fontSize: 19,
     fontWeight: 600,
     color: palette.textPrimary,
   },
   faqA: {
-    margin: 0,
-    fontSize: 14,
+    margin: `${spacing.md}px 0 0`,
+    fontSize: 16,
     lineHeight: 1.65,
     color: palette.textSecondary,
   },

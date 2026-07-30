@@ -2,47 +2,68 @@ import { CSSProperties } from 'react';
 import { Mail, MessageSquare } from 'lucide-react';
 import { APP, CONTACT } from '../constants/content';
 import { fontSize, maxWidth, pagePaddingX, palette, spacing } from '../constants/theme';
+import { AnimatedSection, RevealItem } from '../components/AnimatedSection';
 import { ContactForm } from '../components/ContactForm';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { usePageEnter } from '../hooks/usePageEnter';
 
 export const ContactPage: React.FC = () => {
   const isMobile = useIsMobile();
+  const pageRef = usePageEnter<HTMLDivElement>();
 
   return (
-    <div style={styles.page}>
-      <div
-        style={{
-          ...styles.container,
-          flexDirection: isMobile ? 'column' : 'row',
-        }}
-      >
-        <div style={styles.info}>
-          <h1 style={styles.title}>{CONTACT.title}</h1>
-          <p style={styles.subtitle}>{CONTACT.subtitle}</p>
+    <div ref={pageRef}>
+      <AnimatedSection style={styles.page} stagger={0.12} y={32}>
+        <div
+          style={{
+            ...styles.container,
+            flexDirection: isMobile ? 'column' : 'row',
+          }}
+        >
+          <div style={styles.info}>
+            <RevealItem>
+              <h1 style={styles.title}>{CONTACT.title}</h1>
+            </RevealItem>
+            <RevealItem>
+              <p style={styles.subtitle}>{CONTACT.subtitle}</p>
+            </RevealItem>
 
-          <div style={styles.infoBlock}>
-            <Mail size={20} color={palette.primary} />
-            <div>
-              <p style={styles.infoLabel}>Email us</p>
-              <a href={`mailto:${APP.supportEmail}`} style={styles.email}>
-                {APP.supportEmail}
-              </a>
-            </div>
+            <RevealItem>
+              <div style={styles.infoBlock} className="mm-icon-lift">
+                <span className="mm-icon" style={{ display: 'inline-flex' }}>
+                  <Mail size={20} color={palette.primary} />
+                </span>
+                <div>
+                  <p style={styles.infoLabel}>Email us</p>
+                  <a
+                    href={`mailto:${APP.supportEmail}`}
+                    style={styles.email}
+                    className="mm-link"
+                  >
+                    {APP.supportEmail}
+                  </a>
+                </div>
+              </div>
+            </RevealItem>
+
+            <RevealItem>
+              <div style={styles.infoBlock} className="mm-icon-lift">
+                <span className="mm-icon" style={{ display: 'inline-flex' }}>
+                  <MessageSquare size={20} color={palette.primary} />
+                </span>
+                <div>
+                  <p style={styles.infoLabel}>Note</p>
+                  <p style={styles.note}>{CONTACT.supportNote}</p>
+                </div>
+              </div>
+            </RevealItem>
           </div>
 
-          <div style={styles.infoBlock}>
-            <MessageSquare size={20} color={palette.primary} />
-            <div>
-              <p style={styles.infoLabel}>Note</p>
-              <p style={styles.note}>{CONTACT.supportNote}</p>
-            </div>
-          </div>
+          <RevealItem style={styles.formWrap}>
+            <ContactForm />
+          </RevealItem>
         </div>
-
-        <div style={styles.formWrap}>
-          <ContactForm />
-        </div>
-      </div>
+      </AnimatedSection>
     </div>
   );
 };
@@ -81,7 +102,7 @@ const styles: Record<string, CSSProperties> = {
   },
   infoLabel: {
     margin: 0,
-    fontSize: 13,
+    fontSize: 15,
     fontWeight: 600,
     color: palette.textSecondary,
     textTransform: 'uppercase',
@@ -93,11 +114,12 @@ const styles: Record<string, CSSProperties> = {
     color: palette.primary,
     fontWeight: 600,
     textDecoration: 'none',
-    fontSize: 15,
+    fontSize: 17,
+    width: 'fit-content',
   },
   note: {
     margin: `${spacing.xs}px 0 0`,
-    fontSize: 14,
+    fontSize: 16,
     color: palette.textSecondary,
     lineHeight: 1.5,
   },

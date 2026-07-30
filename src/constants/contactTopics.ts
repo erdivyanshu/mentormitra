@@ -1,6 +1,6 @@
 export const CONTACT_TOPICS = [
   { value: 'general', label: 'General Enquiry' },
-  { value: 'career', label: 'Career Guidance' },
+  { value: 'exam', label: 'JEE / NEET / BITSAT Guidance' },
   { value: 'mentor', label: 'Become a Mentor' },
   { value: 'support', label: 'Technical Support' },
   { value: 'billing', label: 'Billing & Payments' },
