@@ -1,9 +1,7 @@
 import { CSSProperties, FormEvent, useState } from 'react';
-import { useForm, ValidationError } from '@formspree/react';
 import { CheckCircle, Send } from 'lucide-react';
 import { CONTACT_TOPICS, ContactTopicValue } from '../constants/contactTopics';
 import { CONTACT } from '../constants/content';
-import { FORMSPREE_FORM_ID } from '../constants/forms';
 import { palette, radius, spacing } from '../constants/theme';
 import { FormField, FormInput, FormSelect, FormTextarea } from './FormField';
 
@@ -22,6 +20,7 @@ interface FormErrors {
 }
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const SUBMIT_DELAY_MS = 800;
 
 const validate = (form: FormState): FormErrors => {
   const errors: FormErrors = {};
@@ -39,18 +38,10 @@ const validate = (form: FormState): FormErrors => {
 const emptyForm: FormState = { name: '', email: '', topic: '', message: '' };
 
 export const ContactForm: React.FC = () => {
-  const [formKey, setFormKey] = useState(0);
-
-  return (
-    <ContactFormInner key={formKey} onReset={() => setFormKey((k) => k + 1)} />
-  );
-};
-
-/** Remounts on reset so Formspree `succeeded` state clears */
-const ContactFormInner: React.FC<{ onReset?: () => void }> = ({ onReset }) => {
-  const [state, handleSubmit] = useForm(FORMSPREE_FORM_ID);
   const [form, setForm] = useState<FormState>(emptyForm);
   const [errors, setErrors] = useState<FormErrors>({});
+  const [submitting, setSubmitting] = useState(false);
+  const [succeeded, setSucceeded] = useState(false);
 
   const update = (field: keyof FormState, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -58,16 +49,28 @@ const ContactFormInner: React.FC<{ onReset?: () => void }> = ({ onReset }) => {
   };
 
   const onSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const validationErrors = validate(form);
     if (Object.keys(validationErrors).length > 0) {
-      e.preventDefault();
       setErrors(validationErrors);
       return;
     }
-    handleSubmit(e);
+
+    setSubmitting(true);
+    window.setTimeout(() => {
+      setSubmitting(false);
+      setSucceeded(true);
+      setForm(emptyForm);
+    }, SUBMIT_DELAY_MS);
   };
 
-  if (state.succeeded) {
+  const onReset = () => {
+    setSucceeded(false);
+    setErrors({});
+    setForm(emptyForm);
+  };
+
+  if (succeeded) {
     return (
       <div style={styles.success}>
         <CheckCircle size={40} color={palette.primary} />
@@ -81,8 +84,6 @@ const ContactFormInner: React.FC<{ onReset?: () => void }> = ({ onReset }) => {
 
   return (
     <form onSubmit={onSubmit} style={styles.form} noValidate>
-      <ValidationError errors={state.errors} style={styles.formError} />
-
       <FormField label="Full name" error={errors.name}>
         <FormInput
           type="text"
@@ -91,9 +92,8 @@ const ContactFormInner: React.FC<{ onReset?: () => void }> = ({ onReset }) => {
           value={form.name}
           hasError={!!errors.name}
           onChange={(e) => update('name', e.target.value)}
-          disabled={state.submitting}
+          disabled={submitting}
         />
-        <ValidationError prefix="Name " field="name" errors={state.errors} style={styles.fieldError} />
       </FormField>
 
       <FormField label="Email" error={errors.email}>
@@ -104,9 +104,8 @@ const ContactFormInner: React.FC<{ onReset?: () => void }> = ({ onReset }) => {
           value={form.email}
           hasError={!!errors.email}
           onChange={(e) => update('email', e.target.value)}
-          disabled={state.submitting}
+          disabled={submitting}
         />
-        <ValidationError prefix="Email " field="email" errors={state.errors} style={styles.fieldError} />
       </FormField>
 
       <FormField label="Topic" error={errors.topic}>
@@ -115,7 +114,7 @@ const ContactFormInner: React.FC<{ onReset?: () => void }> = ({ onReset }) => {
           value={form.topic}
           hasError={!!errors.topic}
           onChange={(e) => update('topic', e.target.value)}
-          disabled={state.submitting}
+          disabled={submitting}
         >
           <option value="">Select a topic</option>
           {CONTACT_TOPICS.map((t) => (
@@ -124,7 +123,6 @@ const ContactFormInner: React.FC<{ onReset?: () => void }> = ({ onReset }) => {
             </option>
           ))}
         </FormSelect>
-        <ValidationError prefix="Topic " field="topic" errors={state.errors} style={styles.fieldError} />
       </FormField>
 
       <FormField label="Message" error={errors.message}>
@@ -134,14 +132,13 @@ const ContactFormInner: React.FC<{ onReset?: () => void }> = ({ onReset }) => {
           value={form.message}
           hasError={!!errors.message}
           onChange={(e) => update('message', e.target.value)}
-          disabled={state.submitting}
+          disabled={submitting}
         />
-        <ValidationError prefix="Message " field="message" errors={state.errors} style={styles.fieldError} />
       </FormField>
 
-                      <button type="submit" style={styles.submit} className="mm-btn" disabled={state.submitting}>
+      <button type="submit" style={styles.submit} className="mm-btn" disabled={submitting}>
         <Send size={18} />
-        {state.submitting ? 'Sending...' : 'Submit'}
+        {submitting ? 'Sending...' : 'Submit'}
       </button>
     </form>
   );
@@ -194,20 +191,5 @@ const styles: Record<string, CSSProperties> = {
     fontWeight: 600,
     cursor: 'pointer',
     textDecoration: 'underline',
-  },
-  formError: {
-    display: 'block',
-    marginBottom: spacing.lg,
-    padding: spacing.md,
-    backgroundColor: 'rgba(220, 38, 38, 0.08)',
-    borderRadius: radius.sm,
-    color: palette.danger,
-    fontSize: 16,
-  },
-  fieldError: {
-    display: 'block',
-    marginTop: spacing.xs,
-    fontSize: 14,
-    color: palette.danger,
   },
 };
